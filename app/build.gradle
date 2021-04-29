@@ -134,16 +134,16 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav__version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav__version"
 
-    debugImplementation project(':smart-pos-core')
-    debugImplementation project(':smart-pos-usb')
-    paxDebugImplementation project(':smart-pos-emv-pax')
-    telpoDebugImplementation project(':smart-pos-emv-telpo')
+//    debugImplementation project(':smart-pos-core')
+//    debugImplementation project(':smart-pos-usb')
+//    paxDebugImplementation project(':smart-pos-emv-pax')
+//    telpoDebugImplementation project(':smart-pos-emv-telpo')
 
 
-    releaseImplementation project(':smart-pos-core')
-    releaseImplementation project(':smart-pos-usb')
-    paxReleaseImplementation project(':smart-pos-emv-pax')
-    telpoReleaseImplementation project(':smart-pos-emv-telpo')
+    implementation project(':smart-pos-core-release')
+    implementation project(':smart-pos-usb-release')
+    implementation project(':smart-pos-emv-pax-release')
+    implementation project(':smart-pos-emv-telpo-release')
 
 
     testImplementation 'junit:junit:4.12'
@@ -155,10 +155,56 @@ dependencies {
 
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
     implementation 'com.tapadoo.android:alerter:3.0.0'
+    implementation 'com.airbnb.android:lottie:3.6.1'
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+
+
+    implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    implementation 'com.tapadoo.android:alerter:3.0.0'
+    implementation "com.google.zxing:core:$zxing_version"
+    implementation "com.igweze.ebi:simple-call-adapter:1.0.1"
+
+    // kotlin optional lib
+    implementation "com.gojuno.koptional:koptional:$koptional_version"
+
+    // retrofit http library
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+"
+    // retrofit gson converter
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+//    // xml converter
+//    implementation ('com.thoughtworks.xstream:xstream:1.4.11') {
+//        exclude group: 'xmlpull', module: 'xmlpull'
+//        exclude group: 'org.xmlpull.v1.XmlPullParserException'
+//    }
+    // picasso image library
+    implementation('com.squareup.picasso:picasso:2.71828') {
+        exclude group: "com.android.support"
+    }
+
+    // architecture paging
+    implementation 'androidx.paging:paging-runtime:2.1.0'
+
+    // realm monarch pagging library
+    implementation 'com.github.Zhuinden:realm-monarchy:0.5.1'
+
+    implementation("com.journeyapps:zxing-android-embedded:$zxing_version") {
+        exclude group: "com.android.support"
+    }
+
+    // retrofit xml converter
+    implementation('com.squareup.retrofit2:converter-simplexml:2.0.0-beta3') {
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
 }
 repositories {
     mavenCentral()
