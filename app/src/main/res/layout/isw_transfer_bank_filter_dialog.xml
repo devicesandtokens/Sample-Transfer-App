@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <com.google.android.material.appbar.AppBarLayout
+        style=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/isw_bg_solid_primary"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/isw_transfer_search_dialog_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingStart="6dp"
+            android:paddingLeft="6dp"
+            android:paddingEnd="16dp"
+            android:paddingRight="16dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:navigationIcon="@drawable/isw_ic_close" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <EditText
+            android:id="@+id/isw_transfer_bank_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:focusable="true"
+            app:iconifiedByDefault="false"
+            android:textColor="@color/iswTextColorSecondaryDark"
+            android:hint="Search here"
+            android:focusableInTouchMode="true"
+            android:paddingLeft="10dp"
+            android:background="@drawable/isw_custom_tranfer_search_background"
+            android:layout_margin="16dp">
+        </EditText>
+
+        <ListView
+            android:id="@+id/isw_transfer_bank_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+
+            />
+
+</LinearLayout>

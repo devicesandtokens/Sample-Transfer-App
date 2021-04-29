@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/root_view_for_print"
+
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <ImageView
+            android:id="@+id/transactionResponseIcon_transfer"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:src="@drawable/isw_round_done_padded"
+            tools:src="@drawable/isw_failure"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/transactionstatus_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:srcCompat="@drawable/ic_finished"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_receipt_text_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Thank You!"
+            android:textColor="#8097B1"
+            android:textSize="30sp"
+            android:textAllCaps="true"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transactionstatus_image" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_transaction_msg_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Your transaction was successful."
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_receipt_text_transfer" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/isw_materialcardview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            app:cardElevation="0dp"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toBottomOf="@+id/isw_stan_transfer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_transaction_msg_transfer"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_date_text_transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="Date: 2019-11-22 / 10:00AM"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/isw_materialcardview"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_payment_type_label_transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/isw_card_type"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/isw_date_text_transfer" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_payment_type_transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="First Bank Master card"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/isw_payment_type_label_transfer" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_amount_paid_label_transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/isw_amount_paid"
+            android:textSize="22sp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/isw_payment_type_transfer" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_amount_paid_transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Amount: NGN 10,000.00"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/isw_amount_paid_label_transfer" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_stan_label_transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/isw_stan"
+            android:textSize="22sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/isw_amount_paid_transfer" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/isw_stan_transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="0849399"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/isw_stan_label_transfer" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/isw_print_receipt_transfer"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/isw_ic_print"
+            app:iconGravity="textStart"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/iswWhite"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            app:cornerRadius="20dp"
+            android:text="@string/isw_title_print_receipt"
+            android:background="@color/iswColorPrimary"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_materialcardview"
+            app:rippleColor="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/isw_print_receipt_transfer_agent"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/isw_ic_print"
+            app:iconGravity="textStart"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/iswWhite"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            app:cornerRadius="20dp"
+            android:text="@string/isw_title_print_receipt_agent"
+            android:background="@color/iswColorPrimary"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_print_receipt_transfer"
+            app:rippleColor="@android:color/white" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/isw_go_to_landing"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/iswWhite"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            app:cornerRadius="10dp"
+            android:text="@string/isw_finish"
+            app:backgroundTint="@color/iswTextColorSuccessDark"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_print_receipt_transfer_agent"
+            app:rippleColor="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/isw_share_receipt_transfer"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginBottom="5dp"
+            android:text="@string/isw_share_receipt"
+            app:strokeWidth="1dp"
+            android:visibility="gone"
+            app:strokeColor="@color/iswColorPrimary"
+            app:icon="@drawable/isw_ic_share"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_print_receipt_transfer"
+            app:rippleColor="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/isw_reversal_transfer"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginBottom="5dp"
+            android:text="@string/isw_reversal"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/iswColorPrimary"
+            app:iconGravity="textStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:rippleColor="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/isw_refund_transfer"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginBottom="5dp"
+            android:text="@string/isw_refund"
+            android:visibility="gone"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/iswColorPrimary"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_reversal_transfer"
+            app:rippleColor="@android:color/white" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+</layout>
+
+

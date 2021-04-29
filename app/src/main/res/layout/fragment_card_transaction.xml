@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+<ViewAnimator
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/iswCardPaymentViewAnimator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateFirstView="true"
+    android:inAnimation="@android:anim/fade_in"
+    android:outAnimation="@android:anim/fade_out">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/isw_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/isw_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/isw_guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/isw_guideline" />
+
+        <include layout="@layout/isw_layout_scanning_card_transfer"
+            android:id="@+id/isw_scanning_card_transfer"
+            android:visibility="visible"
+            tools:visibility="visible"/>
+
+        <include layout="@layout/isw_card_found_white_bg"
+            android:visibility="gone"
+            android:id="@+id/isw_card_found_transfer"
+            tools:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <include layout="@layout/fragment_pin"
+        android:id="@+id/isw_pin_fragment_transfer"
+        tools:visibility="visible"/>
+</ViewAnimator>
+</layout>

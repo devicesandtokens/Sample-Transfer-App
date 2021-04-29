@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context=".views.fragments.AccountSetupFragment"
+android:background="@color/iswColorPrimary">
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/isw_guideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.25"/>
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/isw_guideline2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_begin="@dimen/isw_guideline"/>
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/isw_guideline3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_end="@dimen/isw_guideline"/>
+
+<ImageView
+    android:layout_marginTop="@dimen/alerter_activity_vertical_margin"
+    android:id="@+id/backImg"
+    android:scaleType="fitStart"
+    android:layout_marginHorizontal="20dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/isw_ic_navback"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+
+<TextView
+    android:id="@+id/isw_fragment_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp"
+    android:textColor="@android:color/white"
+    android:textSize="30sp"
+    android:fontFamily="@font/roboto_bold"
+    android:text="@string/isw_account_details"
+    app:layout_constraintBottom_toTopOf="@id/isw_guideline"
+    app:layout_constraintStart_toStartOf="@+id/isw_guideline2"/>
+
+<View
+    android:id="@+id/isw_view"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:background="@drawable/isw_card_background"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/isw_guideline"/>
+
+<View
+    android:id="@+id/isw_view2"
+    android:visibility="invisible"
+    android:layout_width="80dp"
+    android:layout_height="5dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/isw_round_handle_blue"
+    app:layout_constraintEnd_toEndOf="@id/isw_guideline3"
+    app:layout_constraintStart_toStartOf="@id/isw_guideline2"
+    app:layout_constraintTop_toTopOf="@id/isw_view"/>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    app:layout_constraintStart_toStartOf="@id/isw_guideline2"
+    app:layout_constraintEnd_toStartOf="@id/isw_guideline3"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintTop_toTopOf="@+id/isw_view">
+
+
+    <TextView
+        android:id="@+id/isw_transfer_input_bank_code_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="Bank"
+        android:textColor="@color/iswTextColorBlack"
+        android:fontFamily="@font/roboto_black"
+        android:textSize="20sp">
+    </TextView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:focusable="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/isw_transfer_input_bank"
+            app:endIconDrawable="@drawable/isw_ic_download"
+            android:gravity="center_vertical"
+            android:background="#EDEDED"
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/account_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account Number"
+        android:textColor="@color/iswTextColorBlack"
+        android:fontFamily="@font/roboto_black"
+        android:textSize="20sp">
+    </TextView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextFieldAmount"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/isw_transfer_input_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#EDEDED"
+            android:gravity="center_vertical"
+            android:maxLength="10"
+            android:ems="10"
+            android:inputType="number"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/account_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="Account Name"
+        android:visibility="gone"
+        android:textColor="@color/iswTextColorBlack"
+        android:fontFamily="@font/roboto_black"
+        android:textSize="20sp">
+    </TextView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedNameTextField"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:focusable="false"
+        android:visibility="gone"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/isw_transfer_input_account_name"
+            android:gravity="center_vertical"
+            android:background="#EDEDED"
+            android:focusableInTouchMode="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/isw_transfer_input_proceed"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/isw_proceed"
+        app:rippleColor="@android:color/white"/>
+
+</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

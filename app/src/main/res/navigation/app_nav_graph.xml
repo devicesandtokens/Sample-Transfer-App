@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.interswitchng.interswitchpos.views.fragments.HomeLandingFragment"
+        android:label="fragment_home_landing"
+        tools:layout="@layout/fragment_home_landing" >
+        <action
+            android:id="@+id/action_home_to_amountFragment2"
+            app:destination="@id/amountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.interswitchng.interswitchpos.views.fragments.SettingsLandingFragment"
+        android:label="fragment_settings_landing"
+        tools:layout="@layout/fragment_settings_landing" >
+        <action
+            android:id="@+id/action_settings_to_accountSetupFragment2"
+            app:destination="@id/accountSetupFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/history"
+        android:name="com.interswitchng.interswitchpos.views.fragments.HistoryLandingFragment"
+        android:label="fragment_history_landing"
+        tools:layout="@layout/fragment_history_landing" />
+    <fragment
+        android:id="@+id/cardTransactionFragment"
+        android:name="com.interswitchng.interswitchpos.views.fragments.CardTransactionFragment"
+        android:label="CardTransactionFragment" >
+        <action
+            android:id="@+id/action_cardTransactionFragment_to_processingFragment"
+            app:destination="@id/processingFragment" />
+        <argument
+            android:name="amount"
+            app:argType="string" />
+        <argument
+            android:name="paymentType"
+            app:argType="com.interswitchng.smartpos.models.transaction.PaymentType" />
+    </fragment>
+    <fragment
+        android:id="@+id/processingFragment"
+        android:name="com.interswitchng.interswitchpos.views.fragments.ProcessingFragment"
+        android:label="ProcessingFragment" >
+        <argument
+            android:name="accountType"
+            app:argType="com.interswitchng.smartpos.models.transaction.cardpaycode.request.AccountType" />
+        <argument
+            android:name="cardType"
+            app:argType="com.interswitchng.smartpos.models.transaction.cardpaycode.CardType" />
+        <argument
+            android:name="amount"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_processingFragment_to_transactionStatusFragment"
+            app:destination="@id/transactionStatusFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionStatusFragment"
+        android:name="com.interswitchng.interswitchpos.views.fragments.TransactionStatusFragment"
+        android:label="TransactionStatusFragment" >
+        <argument
+            android:name="transactionResponseModel"
+            app:argType="com.interswitchng.smartpos.models.TransactionResponseModel" />
+        <argument
+            android:name="paymentModel"
+            app:argType="com.interswitchng.smartpos.models.PaymentModel" />
+        <action
+            android:id="@+id/action_transactionStatusFragment_to_transactionReceiptFragment"
+            app:destination="@id/transactionReceiptFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionReceiptFragment"
+        android:name="com.interswitchng.interswitchpos.views.fragments.TransactionReceiptFragment"
+        android:label="TransactionReceiptFragment" >
+        <argument
+            android:name="transactionResponseModel"
+            app:argType="com.interswitchng.smartpos.models.TransactionResponseModel" />
+        <argument
+            android:name="withAgent"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="rePrint"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/amountFragment"
+        android:name="com.interswitchng.interswitchpos.views.fragments.AmountFragment"
+        android:label="AmountFragment" >
+        <action
+            android:id="@+id/action_amountFragment_to_cardTransactionFragment"
+            app:destination="@id/cardTransactionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountSetupFragment2"
+        android:name="com.interswitchng.interswitchpos.views.fragments.AccountSetupFragment"
+        android:label="fragment_account_setup"
+        tools:layout="@layout/fragment_account_setup" />
+</navigation>

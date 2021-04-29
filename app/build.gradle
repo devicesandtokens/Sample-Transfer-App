@@ -1,0 +1,165 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.getkeepsafe.dexcount'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.navigation.safeargs'
+
+
+android {
+
+    buildFeatures {
+        dataBinding true
+    }
+    compileSdkVersion targetSdk
+    defaultConfig {
+        applicationId "com.interswitchng.interswitchpos"
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        multiDexEnabled true
+        versionCode 4
+        versionName "1.3"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+        android.applicationVariants.all{
+            variant ->
+                variant.outputs.all{
+                    def date = new Date()
+                    def formattedDate = date.format('yyMMdd')
+                    String appName = "Smart POS"
+                    outputFileName = "${appName}-${variant.versionName}-${formattedDate}.apk"
+                }
+        }
+    }
+
+    signingConfigs {
+        paxConfig {
+            keyAlias 'PAX'
+            keyPassword 'B6H2A7Y8WG'
+            storeFile file(rootDir.absolutePath + '/PAXKeystore.jks')
+            storePassword 'B6H2A7Y8WG'
+        }
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled minified
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.paxConfig
+            applicationIdSuffix '.v2.release'
+            buildConfigField("boolean", "MOCK", "false") // mock device
+        }
+        debug {
+            buildConfigField("boolean", "MOCK", "false") // mock device
+            applicationIdSuffix '.v2.debug'
+        }
+    }
+
+    flavorDimensions "terminal"
+    productFlavors{
+        telpo {
+            dimension "terminal"
+            applicationIdSuffix ".telpo"
+            versionNameSuffix "-telpo"
+        }
+        pax {
+            dimension "terminal"
+            applicationIdSuffix ".pax"
+            versionNameSuffix "-pax"
+        }
+    }
+    compileOptions {
+        targetCompatibility javaVersion
+        sourceCompatibility javaVersion
+    }
+
+
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    configurations {
+        telpoReleaseImplementation
+        telpoDebugImplementation
+
+        paxReleaseImplementation
+        paxDebugImplementation
+
+        releaseImplementation
+        debugImplementation
+    }
+
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation 'com.android.support:support-v4:28.0.0'
+    def nav__version = "2.3.5"
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    implementation "androidx.multidex:multidex:$multidex_version"
+
+    //releaseImplementation "com.interswitchng:smart-pos-core:$versionName"
+    //paxDebugImplementation "com.interswitchng:smart-pos-emv-pax:$versionName"
+    //releaseImplementation "com.interswitchng:smart-pos-usb:$versionName"
+
+
+    // kotlin coroutine libs
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav__version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav__version"
+
+    debugImplementation project(':smart-pos-core')
+    debugImplementation project(':smart-pos-usb')
+    paxDebugImplementation project(':smart-pos-emv-pax')
+    telpoDebugImplementation project(':smart-pos-emv-telpo')
+
+
+    releaseImplementation project(':smart-pos-core')
+    releaseImplementation project(':smart-pos-usb')
+    paxReleaseImplementation project(':smart-pos-emv-pax')
+    telpoReleaseImplementation project(':smart-pos-emv-telpo')
+
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "org.koin:koin-test:$koin_version"
+
+    implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    implementation 'com.pixplicity.easyprefs:library:1.9.0'
+    implementation 'com.tapadoo.android:alerter:3.0.0'
+
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+}
+repositories {
+    mavenCentral()
+}

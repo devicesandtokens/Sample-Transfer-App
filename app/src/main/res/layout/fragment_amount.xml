@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/isw_merchant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/isw_enter_amount"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/isw_card_background"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/isw_amount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:text="Amount"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:maxLines="1"
+            android:id="@+id/isw_amount_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10,000.00"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/isw_amount_text"
+            android:layout_marginLeft="32dp" />
+
+        <TextView
+            android:id="@+id/isw_keypad_one_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/isw_keypad_two_transfer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/isw_amount_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_two_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/isw_keypad_three_transfer"
+            app:layout_constraintStart_toEndOf="@+id/isw_keypad_one_transfer"
+            app:layout_constraintTop_toBottomOf="@+id/isw_amount_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_three_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/isw_keypad_two_transfer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/isw_keypad_two_transfer"
+            app:layout_constraintTop_toBottomOf="@+id/isw_amount_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_four_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/isw_keypad_background"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="4"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/isw_keypad_five_transfer"
+            app:layout_constraintEnd_toStartOf="@+id/isw_keypad_five_transfer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_keypad_one_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_five_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="5"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/isw_keypad_six_transfer"
+            app:layout_constraintStart_toEndOf="@+id/isw_keypad_four_transfer"
+            app:layout_constraintTop_toBottomOf="@+id/isw_keypad_two_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_six_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="6"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/isw_keypad_five_transfer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/isw_keypad_five_transfer"
+            app:layout_constraintTop_toTopOf="@+id/isw_keypad_five_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_seven_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="7"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/isw_keypad_eight_transfer"
+            app:layout_constraintEnd_toStartOf="@+id/isw_keypad_eight_transfer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_keypad_four_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_eight_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="8"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/isw_keypad_nine_transfer"
+            app:layout_constraintStart_toEndOf="@+id/isw_keypad_seven_transfer"
+            app:layout_constraintTop_toBottomOf="@+id/isw_keypad_five_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_nine_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="9"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/isw_keypad_eight_transfer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/isw_keypad_eight_transfer"
+            app:layout_constraintTop_toTopOf="@+id/isw_keypad_eight_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/isw_keypad_zero_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/isw_keypad_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/isw_keypad_color_statelist"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/isw_keypad_eight_transfer"
+            app:layout_constraintStart_toStartOf="@+id/isw_keypad_eight_transfer"
+            app:layout_constraintTop_toBottomOf="@+id/isw_keypad_eight_transfer"
+            tools:textColor="@android:color/black"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/isw_proceed_transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/isw_proceed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/isw_keypad_zero_transfer"
+            app:rippleColor="@android:color/white"/>
+
+        <ImageButton
+            android:background="@color/iswColorMainBackground"
+            android:id="@+id/isw_back_delete_button_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/isw_ic_amount_delete"
+            app:layout_constraintEnd_toEndOf="@+id/isw_keypad_nine_transfer"
+            app:layout_constraintStart_toStartOf="@+id/isw_keypad_nine_transfer"
+            app:layout_constraintTop_toTopOf="@id/isw_keypad_zero_transfer"
+            app:layout_constraintBottom_toBottomOf="@+id/isw_keypad_zero_transfer"/>
+
+        <ImageButton
+            android:background="@color/iswColorMainBackground"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/isw_dot_button_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/isw_ic_dot"
+            app:layout_constraintEnd_toEndOf="@+id/isw_keypad_seven_transfer"
+            app:layout_constraintStart_toStartOf="@+id/isw_keypad_seven_transfer"
+            app:layout_constraintTop_toTopOf="@id/isw_keypad_zero_transfer"
+            app:layout_constraintBottom_toBottomOf="@+id/isw_keypad_zero_transfer"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
