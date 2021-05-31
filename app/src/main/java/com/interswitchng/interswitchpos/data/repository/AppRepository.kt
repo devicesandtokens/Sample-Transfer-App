@@ -43,7 +43,7 @@ class AppRepository(posDevice: POSDevice) {
                                  destinationAccountNumber: String,
                                  receivingInstitutionId: String? ): CardReadTransactionResponse {
         return withContext(Dispatchers.IO) {
-            handler.processTransferTransaction(paymentModel, accountType, terminalInfo, destinationAccountNumber, receivingInstitutionId)
+            handler.processCashoutTransferTransaction(paymentModel, accountType, terminalInfo, destinationAccountNumber, receivingInstitutionId)
         }
 
     }

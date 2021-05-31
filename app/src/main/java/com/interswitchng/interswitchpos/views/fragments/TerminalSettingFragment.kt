@@ -341,7 +341,7 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
         if (keysDate.toLong() != -1L) {
 //            val date = Date(terminalDate)
             val dateStr =  SimpleDateFormat.getDateTimeInstance().format(Date())
-            tvKeyDate.text = getString(com.interswitchng.smartpos.R.string.isw_title_date, dateStr)
+            tvKeyDate.text = getString(R.string.isw_title_date, dateStr)
             tvKeys.text = getString(com.interswitchng.smartpos.R.string.isw_title_keys_downloaded)
         } else {
             val message = "No keys"

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.interswitchng.interswitchpos.R
+import com.interswitchng.smartpos.IswTxnHandler
 import com.interswitchng.smartpos.shared.Constants
 import kotlinx.android.synthetic.main.fragment_amount.*
 import java.text.NumberFormat
@@ -135,10 +136,10 @@ class AmountFragment : Fragment() {
     private fun proceedWithPayment() {
         val latestAmount = isw_amount_transfer.text.toString()
         val latestAmountWithoutComma = latestAmount.replace("[$,.]".toRegex(), "")
-        amount = latestAmountWithoutComma.toInt().toString() //latestAmount.toDouble()
+        amount = IswTxnHandler().getCashoutMinorAmount(latestAmountWithoutComma.toInt()).toString() //latestAmount.toDouble()
         formattedAmount = latestAmount
 
-        println(amount)
+        println("this is amount: $amount")
 
         val direction = AmountFragmentDirections.actionAmountFragmentToCardTransactionFragment(amount, paymentType)
          findNavController().navigate(direction)
