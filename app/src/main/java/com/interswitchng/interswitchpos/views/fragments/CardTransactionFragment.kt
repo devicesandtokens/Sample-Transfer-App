@@ -1,6 +1,8 @@
 package com.interswitchng.interswitchpos.views.fragments
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.interswitchng.interswitchpos.R
 import com.interswitchng.interswitchpos.databinding.FragmentCardTransactionBinding
 import com.interswitchng.interswitchpos.utils.*
@@ -57,6 +60,7 @@ class CardTransactionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        loading = Dialog(this.requireContext())
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_card_transaction, container, false)
         if (IswPos.isConfigured()) {
             terminalInfo?.let {
@@ -87,23 +91,66 @@ class CardTransactionFragment : Fragment() {
             // when card is detected
             is EmvMessage.CardDetected -> {
                 println("me: CardDetected")
-                loading = customdailog(requireContext(), "Please wait while we load card")
+//                showCardDetectedView(false)
+
+//                loading = customdailog(requireContext(), "Please wait while we load card")
             }
 
             // when card should be inserted
             is EmvMessage.InsertCard -> {
+                Toast.makeText(requireContext(), "Please tap your card", Toast.LENGTH_LONG).show()
+            }
 
+            is EmvMessage.ChooseApplication -> {
+                val candidateList = message.values
+                var options = Array<String>(candidateList.size){"$it"}
+                candidateList.forEachIndexed { index, candidateAID ->
+                    options[index] = String(candidateAID?.appName!!)
+                 }
+                val builder = MaterialAlertDialogBuilder(context)
+                builder.setTitle("choose an application")
+
+                builder.setSingleChoiceItems(options, -1){dialog, i ->
+                    Toast.makeText(context, "I selected $i", Toast.LENGTH_SHORT).show()
+                    viewmodel.appSelected(i)
+                    dialog.dismiss()
+                }
+
+                builder.show()
+
+                Toast.makeText(context, "Please select an application", Toast.LENGTH_SHORT).show()
+            }
+            // when error is trown from clss
+
+            is EmvMessage.ClssTransError -> {
+                if (loading.isShowing) {
+                    loading.dismiss()
+                }
+                Toast.makeText(requireContext(), message.error, Toast.LENGTH_LONG).show()
             }
 
             // when card has been read
             is EmvMessage.CardRead -> {
                 //Dismiss the dialog showing "Reading Card"
-                loading.dismiss()
+                if (loading.isShowing) {
+                    loading.dismiss()
+                }
 
+                println("I have read the card")
                 cardType = message.cardType
 
                 //Show Card detected view
-                showCardDetectedView()
+                showCardDetectedView(false)
+            }
+
+            is EmvMessage.ClssCardDetected -> {
+                //Dismiss the dialog showing "Reading Card"
+                if (loading.isShowing) {
+                    loading.dismiss()
+                }
+
+                //Show Card detected view
+                showCardDetectedView(true)
             }
 
             // card details is for telpo terminals
@@ -117,12 +164,10 @@ class CardTransactionFragment : Fragment() {
                 cancelTransaction("Transaction Cancelled: Card was removed")
                 Toast.makeText(requireContext(), "Transaction Cancelled: Card was removed", Toast.LENGTH_LONG).show()
             }
-
-
             // when user should enter pin
             is EmvMessage.EnterPin -> {
                 println(message)
-                loading.dismiss()
+//                loading.dismiss()
                 binding.iswCardPaymentViewAnimator.displayedChild = 1
                 binding.iswPinFragmentTransfer.iswAmount.text = formatString(amount.toInt() / 100)
                 Toast.makeText(requireContext(), "Enter Your Pin", Toast.LENGTH_LONG).show()
@@ -174,9 +219,12 @@ class CardTransactionFragment : Fragment() {
             is EmvMessage.ProcessingTransaction -> {
                 println("got here")
               val direction = CardTransactionFragmentDirections.actionCardTransactionFragmentToProcessingFragment(
-                      accountType, cardType, amount
+                      accountType, CardType.MASTER, amount
               )
               findNavController().navigate(direction)
+            }
+            else -> {
+
             }
         }
     }
@@ -190,7 +238,7 @@ class CardTransactionFragment : Fragment() {
         viewmodel.cancelTransaction()
     }
 
-    private fun showCardDetectedView() {
+    private fun showCardDetectedView(isClss: Boolean) {
         //Hide Scanning Card View
         binding.iswScanningCardTransfer.hide()
 
@@ -198,25 +246,36 @@ class CardTransactionFragment : Fragment() {
         binding.iswCardFoundTransfer.show()
 
         //Show account dialog
-        showAccountTypeDialog()
+
+        showAccountTypeDialog(isClss)
+
 
     }
 
-    private fun showAccountTypeDialog() {
-        accountTypeDialog = AccountTypeFragment {
-            accountType = when (it) {
-                0 -> AccountType.Default
-                1 -> AccountType.Savings
-                2 -> AccountType.Current
-                else -> AccountType.Default
-            }
-
+    private fun showAccountTypeDialog(isClss: Boolean) {
+        if (isClss) {
+            accountType = AccountType.Default
             IswTxnHandler().runWithInternet(requireContext()) {
                 // this is where the card pin is validated
-                viewmodel.startTransaction()
+                viewmodel.startClssTransaction()
             }
+        } else {
+            accountTypeDialog = AccountTypeFragment {
+                accountType = when (it) {
+                    0 -> AccountType.Default
+                    1 -> AccountType.Savings
+                    2 -> AccountType.Current
+                    else -> AccountType.Default
+                }
+
+                    IswTxnHandler().runWithInternet(requireContext()) {
+                        // this is where the card pin is validated
+                        viewmodel.startTransaction()
+                    }
+
+            }
+            accountTypeDialog.show(childFragmentManager, "account_type")
         }
-        accountTypeDialog.show(childFragmentManager, "account_type")
     }
 
     companion object {

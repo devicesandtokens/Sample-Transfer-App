@@ -62,13 +62,16 @@ class ProcessingFragment : Fragment() {
                 amount = amount.toInt(),
                 paymentType = PaymentType.Card,
                 type = PaymentModel.TransactionType.TRANSFER)
-        binding.statusText.text = "SENDING.........."
+        binding.statusText.text = "PROCESSING...."
         observeViewModel()
 
         IswTxnHandler().runWithInternet(requireContext()) {
 //            terminalInfo?.let { viewmodel.performTransfer(paymentModel, accountType, it, "2089430464", "627629") }
             terminalInfo?.let { viewmodel.performTransfer(paymentModel, accountType, it, Prefs.getString(Constants.SETTLEMENT_ACCOUNT_NUMBER, ""),
                     Prefs.getString(Constants.SETTLEMENT_BANK_CODE, "")) }
+
+//            terminalInfo?.let { viewmodel.performBalanceInquiry(accountType, it, cardType) }
+//            terminalInfo?.let { viewmodel.performWithdraw(paymentModel, accountType, it) }
 
         }
         return binding.root

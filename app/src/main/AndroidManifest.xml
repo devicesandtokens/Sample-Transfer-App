@@ -5,11 +5,17 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <uses-permission android:name="com.pax.permission.ICC"/>
+    <uses-permission android:name="com.pax.permission.PICC"/>
+    <uses-permission android:name="com.pax.permission.MAGCARD"/>
+    <uses-permission android:name="com.pax.permission.PRINTER"/>
+    <uses-permission android:name="com.pax.permission.PED"/>
+
     <application
         android:name="com.interswitchng.interswitchpos.POSApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo_image"
-        android:label="Smart POS APP"
+        android:label="Smart POS APP t"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"

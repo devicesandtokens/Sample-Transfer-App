@@ -1,4 +1,4 @@
-package com.interswitchng.interswitchpos;
+package com.interswitchng.interswitchposcico;
 
 import android.app.Application;
 import android.content.Context;
@@ -12,6 +12,8 @@ import androidx.multidex.MultiDex;
 
 import com.interswitch.smartpos.emv.telpo.TelpoPOSDeviceImpl;
 import com.interswitch.smartpos.emv.telpo.fingerprint.TelpoPOSFingerprintImpl;
+import com.interswitchng.interswitchpos.BuildConfig;
+import com.interswitchng.interswitchpos.R;
 import com.interswitchng.smartpos.IswPos;
 import com.interswitchng.smartpos.shared.interfaces.device.DevicePrinter;
 import com.interswitchng.smartpos.shared.interfaces.device.EmvCardReader;
@@ -88,6 +90,18 @@ public class POSApplication extends Application {
                 @Override
                 public DevicePrinter getPrinter() {
                     return new DevicePrinter() {
+                        @NotNull
+                        @Override
+                        public PrintStatus printSlipNew(@NotNull Bitmap slip) {
+                            return null;
+                        }
+
+                        @NotNull
+                        @Override
+                        public PrintStatus printEod(@NotNull List<? extends PrintObject> slip, @NotNull UserType user) {
+                            return null;
+                        }
+
                         @Override
                         public PrintStatus printSlip(List<? extends PrintObject> slip, UserType user) {
                             return new PrintStatus.Error("No DevicePrinterImpl installed");

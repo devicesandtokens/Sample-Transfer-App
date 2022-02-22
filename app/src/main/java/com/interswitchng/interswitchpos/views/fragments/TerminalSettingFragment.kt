@@ -90,7 +90,14 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
         setupButtons()
 
         setupUi()
+
+        // temporary get key
+//        temp(terminalInfo)
     }
+
+//    private fun temp(terminalInfo: TerminalInfo?) {
+//        appViewModel.downloadParamsAndKey()
+//    }
 
     private fun setupUi() {
         if (terminalInfo != null) {
@@ -145,6 +152,7 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
                 it?.let {
                     setupTexts(it)
                     progressConfigKimonoDownload.hide()
+                    progressTerminalDownload.hide()
                 }
             })
 
@@ -163,7 +171,7 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
             if (isValid) {
                 // disable and hide button
                 btnDownloadKeys.isEnabled = false
-                btnDownloadKeys.visibility = View.GONE
+//                btnDownloadKeys.visibility = View.GONE
 
                 // set the text of keys
                 tvKeys.text = getString(com.interswitchng.smartpos.R.string.isw_title_downloading_keys)
@@ -174,7 +182,13 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
 
                 // trigger download keys
                 terminalInfo?.let { it1 ->
-                    appViewModel.downloadKey(terminalInfo = it1)
+                    println(switchKimono.isChecked)
+                    if(switchKimono.isChecked) {
+                        appViewModel.downloadKey(terminalInfo = it1, switchToNIBBS.isChecked)
+                    } else {
+                        println("got here")
+                        appViewModel.downloadNibssKey(terminalInfo = it1, switchToNIBBS.isChecked)
+                    }
                     appViewModel.keysDownloadSuccess.observe(this, androidx.lifecycle.Observer {
                         if (it != null) {
                             progressKeyDownload.visibility = View.GONE
@@ -214,7 +228,14 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
                 tvTerminalInfoDate.visibility = View.GONE
 
                 // trigger download terminal config
-                appViewModel.downloadParamsAndKey()
+                appViewModel.downloadNibss(terminalInfo?.terminalId.toString(), etServerIP.getString(), etServerPort.getString())
+                appViewModel.terminalConfig.observe(this, androidx.lifecycle.Observer {
+                    println(it)
+                    it?.let {
+                        setupTexts(it)
+                        progressTerminalDownload.hide()
+                    }
+                })
             }
         }
 
@@ -341,7 +362,7 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
         if (keysDate.toLong() != -1L) {
 //            val date = Date(terminalDate)
             val dateStr =  SimpleDateFormat.getDateTimeInstance().format(Date())
-            tvKeyDate.text = getString(R.string.isw_title_date, dateStr)
+            tvKeyDate.text = getString(com.interswitchng.smartpos.R.string.isw_title_date, dateStr)
             tvKeys.text = getString(com.interswitchng.smartpos.R.string.isw_title_keys_downloaded)
         } else {
             val message = "No keys"
@@ -374,6 +395,8 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
             etCapabilities.setText(capabilities)
             etAgentId.setText(agentId)
             etAgentEmail.setText(agentEmail)
+            etMerchantAlias.setText(merchantAlias)
+            etMerchantCode.setText(merchantCode)
 
             switchKimono.isChecked = isKimono
 //            switchToKimono3.isChecked = isKimono3
@@ -405,6 +428,8 @@ class TerminalSettingFragment: AppCompatActivity(), KoinComponent{
             isKimono = switchKimono.isChecked
             agentId = etAgentId.getString()
             agentEmail = etAgentEmail.getString()
+            merchantAlias = etMerchantAlias.getString()
+            merchantCode = etMerchantCode.getString()
 
             // only set capabilities if it was provided
             etCapabilities.getString().apply {

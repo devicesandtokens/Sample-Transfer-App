@@ -93,8 +93,7 @@ class TransactionReceiptFragment : Fragment() {
         binding.channelTitle.text = "CHANNEL: ${data?.paymentType?.name}"
         binding.dateTitle.text = "DATE: ${getDate(data?.dateTime.toString())}"
         binding.timeTitle.text = "TIME: ${getTime(data?.dateTime.toString())}"
-        var amount = data?.amount.toString()
-        binding.amountTitle.text = getHtmlString("AMOUNT: ${amount.let { getAmountWithCurrency(it.toString(), terminalInfo!!) }}")
+        binding.amountTitle.text = getHtmlString("AMOUNT: ${data?.amount.let { getAmountWithCurrency(it.toString(), terminalInfo!!) }}")
 
         val cardTypeName = when (data?.cardType) {
             CardType.MASTER -> "Master Card"

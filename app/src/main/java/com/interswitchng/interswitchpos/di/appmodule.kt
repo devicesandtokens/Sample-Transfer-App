@@ -1,5 +1,6 @@
 package com.interswitchng.interswitchpos.di
 
+//import com.interswitch.smartpos.emv.telpo.TelpoPOSDeviceImpl.Companion.create
 import com.interswitchng.interswitchpos.data.repository.AppRepository
 import com.interswitchng.interswitchpos.views.viewmodels.AppViewModel
 import com.interswitchng.smartpos.emv.pax.services.POSDeviceImpl

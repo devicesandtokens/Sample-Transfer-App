@@ -1,5 +1,6 @@
 package com.interswitchng.interswitchpos.views.viewmodels
 
+import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,13 +10,22 @@ import com.interswitchng.interswitchpos.data.repository.AppRepository
 import com.interswitchng.smartpos.models.BeneficiaryModel
 import com.interswitchng.smartpos.models.NameEnquiryResult
 import com.interswitchng.smartpos.models.PaymentModel
+import com.interswitchng.smartpos.models.cardless.CardLessPaymentRequest
 import com.interswitchng.smartpos.models.core.TerminalInfo
 import com.interswitchng.smartpos.models.posconfig.TerminalConfig
 import com.interswitchng.smartpos.models.printer.info.PrintStatus
 import com.interswitchng.smartpos.models.transaction.CardReadTransactionResponse
+import com.interswitchng.smartpos.models.transaction.PaymentInfo
+import com.interswitchng.smartpos.models.transaction.PaymentType
+import com.interswitchng.smartpos.models.transaction.cardpaycode.CardType
 import com.interswitchng.smartpos.models.transaction.cardpaycode.EmvMessage
 import com.interswitchng.smartpos.models.transaction.cardpaycode.EmvResult
 import com.interswitchng.smartpos.models.transaction.cardpaycode.request.AccountType
+import com.interswitchng.smartpos.models.transaction.cardpaycode.response.OfflineTerminalSettingsResponse
+import com.interswitchng.smartpos.models.transaction.ussdqr.response.Bank
+import com.interswitchng.smartpos.models.transaction.ussdqr.response.CodeResponse
+import com.interswitchng.smartpos.models.transaction.ussdqr.response.PaymentStatus
+import com.interswitchng.smartpos.shared.models.transaction.CardLessPaymentInfo
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 
@@ -38,9 +48,29 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
     private val _cardTransactionResponse = MutableLiveData<CardReadTransactionResponse>()
     val cardReadTransactionResponse :LiveData<CardReadTransactionResponse> = _cardTransactionResponse
 
+    private val _offlineSettingsResponse = MutableLiveData<OfflineTerminalSettingsResponse>()
+    val offlineSettingsResponse :LiveData<OfflineTerminalSettingsResponse> = _offlineSettingsResponse
+
 
     private val _accountValidationResponse = MutableLiveData<NameEnquiryResult<BeneficiaryModel>>()
     val accountValidationResponse :LiveData<NameEnquiryResult<BeneficiaryModel>> = _accountValidationResponse
+
+
+    private val _virtualAccountResponse = MutableLiveData<CodeResponse>()
+    val virtualAccountResponse :LiveData<CodeResponse> = _virtualAccountResponse
+
+    private val _ussdTransactionResponse = MutableLiveData<CodeResponse>()
+    val ussdTransactionResponse :LiveData<CodeResponse> = _ussdTransactionResponse
+
+
+
+
+
+    private val _bankList = MutableLiveData<List<Bank>>()
+    val bankList :LiveData<List<Bank>> = _bankList
+
+    private val _paymentStatusResponse = MutableLiveData<PaymentStatus>()
+    val paymentStatusResponse :LiveData<PaymentStatus> = _paymentStatusResponse
 
     private val _printerMessage = MutableLiveData<String>()
     val printerMessage: LiveData<String> get() = _printerMessage
@@ -98,6 +128,20 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
         }
     }
 
+    fun startClssTransaction() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.startClssTransaction(this)
+            }
+        }
+    }
+
+    fun appSelected(index: Int) {
+        viewModelScope.launch {
+            channel.send(EmvMessage.AppSelected(index))
+        }
+    }
+
 
     fun performTransfer(paymentModel: PaymentModel,
                         accountType: AccountType,
@@ -115,6 +159,168 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
         }
     }
 
+    fun performWithdraw(paymentModel: PaymentModel,
+                        accountType: AccountType,
+                        terminalInfo: TerminalInfo)
+    {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.performWithDrawal(paymentModel, accountType, terminalInfo)
+                withContext(Dispatchers.Main) {
+                    _cardTransactionResponse.postValue(result)
+                }
+            }
+        }
+    }
+
+    fun performBalanceInquiry(
+                        accountType: AccountType,
+                        terminalInfo: TerminalInfo,
+                        cardType: CardType
+    )
+    {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.performBalanceInquiry(accountType, terminalInfo, cardType)
+                withContext(Dispatchers.Main) {
+                    _cardTransactionResponse.postValue(result)
+                }
+            }
+        }
+    }
+
+    fun loadVirtualAccountDetails(
+           request: CardLessPaymentRequest
+    )
+    {
+        println("got here in viewmodel for virtual account")
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.loadVirtualAccountDetails(request)
+                withContext(Dispatchers.Main) {
+                    println("virtual account details => ${result}")
+                    _virtualAccountResponse.postValue(result)
+                }
+            }
+        }
+    }
+
+    fun initiateUssdTransaction(
+            request: CardLessPaymentRequest
+    )
+    {
+        println("got here in viewmodel for ussd transaction")
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.initiateUssdTransaction(request)
+                withContext(Dispatchers.Main) {
+                    println("virtual account details => ${result}")
+                    _ussdTransactionResponse.postValue(result)
+                }
+            }
+        }
+    }
+
+
+    fun initiatQrTransaction(
+            request: CardLessPaymentRequest, context: Context
+    )
+    {
+        println("got here in viewmodel for QR transaction")
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.initiateQrTransaction(request, context)
+                withContext(Dispatchers.Main) {
+                    println("Qr  details => ${result?.qrCodeImage}")
+                    _ussdTransactionResponse.postValue(result)
+                }
+            }
+        }
+    }
+
+    fun initiatePaycodeTransaction(
+            terminalInfo: TerminalInfo,
+            paymentInfo: CardLessPaymentInfo, code: String
+    )
+    {
+        println("got here in viewmodel for paycode transaction")
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.initiatePaycodeTransaction(terminalInfo, paymentInfo, code)
+                withContext(Dispatchers.Main) {
+                    println("paycode details => ${result}")
+                }
+            }
+        }
+    }
+
+    fun listBanks()
+    {
+        println("got here in viewmodel for list banks")
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.listBanks()
+                withContext(Dispatchers.Main) {
+                    println("cardless banks => ${result}")
+                    _bankList.postValue(result)
+                }
+            }
+        }
+    }
+
+    fun checkPaymentStatus(
+            reference: String,
+            type: PaymentType,
+            merchantCode: String
+    )
+    {
+        println("got here in viewmodel for check payment status")
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val status = appRepository.checkPayment(transactionReference = reference,
+                        merchantCode = merchantCode, paymentType = type)
+                withContext(Dispatchers.Main) {
+                    println(" => ${status}")
+                    _paymentStatusResponse.postValue(status)
+                }
+            }
+        }
+    }
+
+
+    fun performofflineDeposit(
+            amount: String,
+            terminalInfo: TerminalInfo,
+            accountNumber: String
+    )
+    {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.performOfflineDeposit(terminalInfo, amount, accountNumber)
+                withContext(Dispatchers.Main) {
+                    println("offline deposit result => $result")
+                }
+            }
+        }
+    }
+
+    fun performGetOfflineDepositSettings(
+            terminalInfo: TerminalInfo
+    )
+    {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val result = appRepository.performGetOfflineSettings(terminalInfo)
+                withContext(Dispatchers.Main) {
+                    println("offline deposit result => $result")
+                    if (result?.responseCode == "Success") {
+                        _offlineSettingsResponse.postValue(result)
+                    }
+                }
+            }
+        }
+    }
+
     fun cancelTransaction() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -125,7 +331,6 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
 
     fun downloadParamsAndKey() {
         viewModelScope.launch {
-
             withContext(Dispatchers.IO) {
                 val res = appRepository.downloadKimParams()
                 withContext(Dispatchers.Main) {
@@ -135,13 +340,37 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
         }
     }
 
-    fun downloadKey(terminalInfo: TerminalInfo) {
+
+    fun downloadNibss(terminalId: String, ip: String, port: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val res = appRepository.downloadNibsParams(terminalId, ip, port)
+                withContext(Dispatchers.Main) {
+                    _terminalConfig.postValue(res)
+                }
+            }
+        }
+    }
+
+    fun downloadKey(terminalInfo: TerminalInfo, isNibss: Boolean) {
         println("info: $terminalInfo")
          viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                var resp = appRepository.downloadKeys(terminalInfo)
+                var resp = appRepository.downloadKeys(terminalInfo, isNibss)
                 if (resp != null) {
                    _keysDownloadSuccess.postValue(resp)
+                }
+            }
+        }
+    }
+
+    fun downloadNibssKey(terminalInfo: TerminalInfo, isNibss: Boolean) {
+        println("info: $terminalInfo")
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                var resp = appRepository.downloadKeysNibss(terminalInfo, isNibss)
+                if (resp != null) {
+                    _keysDownloadSuccess.postValue(resp)
                 }
             }
         }
@@ -176,6 +405,8 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
             }
         }
     }
+
+
 
 
     fun validateBeneficiary(bankCode: String, accountNumber: String)

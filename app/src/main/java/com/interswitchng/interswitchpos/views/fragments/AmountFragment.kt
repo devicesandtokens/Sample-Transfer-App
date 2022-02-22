@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.interswitchng.interswitchpos.R
+import com.interswitchng.interswitchpos.views.viewmodels.AppViewModel
 import com.interswitchng.smartpos.IswTxnHandler
 import com.interswitchng.smartpos.shared.Constants
 import kotlinx.android.synthetic.main.fragment_amount.*
 import java.text.NumberFormat
 import com.interswitchng.smartpos.models.transaction.PaymentType
+import com.interswitchng.smartpos.shared.utilities.showSnack
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AmountFragment : Fragment() {
 
@@ -20,6 +24,12 @@ class AmountFragment : Fragment() {
     private var amount = Constants.EMPTY_STRING
     private lateinit var paymentType: PaymentType
     private var formattedAmount = "0.00"
+
+    // sample sample sample
+    private val viewmodel : AppViewModel by viewModel()
+    private val terminalInfo by lazy {
+        IswTxnHandler().getTerminalInfo()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,6 +44,17 @@ class AmountFragment : Fragment() {
         handleProceedToolbarClicks()
         handleDigitsClicks()
         paymentType = PaymentType.Card
+
+//        terminalInfo?.let {
+//            viewmodel.performGetOfflineDepositSettings(it)
+//            viewmodel.offlineSettingsResponse.observe(viewLifecycleOwner, Observer {
+//                showSnack(isw_proceed_transfer, it.terminalCashDepositLimit)
+//
+//                if (it.terminalCashDepositLimit != "0") {
+//                    viewmodel.performofflineDeposit("10", terminalInfo!!, "2089430464")
+//                }
+//            })
+//        }
     }
 
     private fun handleProceedToolbarClicks() {

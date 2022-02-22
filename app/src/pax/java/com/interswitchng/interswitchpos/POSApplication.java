@@ -72,96 +72,14 @@ public class POSApplication extends Application {
     private void configureTerminal() {
         POSDevice device;
 
-        if (BuildConfig.MOCK) {
-            device = new POSDevice() {
 
-                @Override
-                public boolean getHasFingerPrintReader() {
-                    return false;
-                }
-
-                @Override
-                public String getName() {
-                    return "";
-                }
-
-                @Override
-                public void loadInitialKey(String key, String ksn) {
-                }
-
-                @Override
-                public void loadPinKey(String key) {
-                }
-
-                @Override
-                public void loadMasterKey(String key) {
-                }
-
-                @Override
-                public DevicePrinter getPrinter() {
-                    return new DevicePrinter() {
-                        @NotNull
-                        @Override
-                        public PrintStatus printSlipNew(@NotNull Bitmap slip) {
-                            return null;
-                        }
-
-                        @Override
-                        public PrintStatus printSlip(List<? extends PrintObject> slip, UserType user) {
-                            return new PrintStatus.Error("No DevicePrinterImpl installed");
-                        }
-
-                        @Override
-                        public PrintStatus canPrint() {
-                            return new PrintStatus.Error("No DevicePrinterImpl installed");
-                        }
-                    };
-                }
-
-
-                @Override
-                public EmvCardReader getEmvCardReader() {
-                    return new EmvCardReader() {
-                        @Override
-                        public Object setupTransaction(int amount, @NotNull TerminalInfo terminalInfo, @NotNull Channel<EmvMessage> channel, @NotNull CoroutineScope scope, @NotNull Continuation<? super Unit> o) {
-                            return null;
-                        }
-
-                        @Override
-                        public EmvResult completeTransaction(TransactionResponse response) {
-                            return EmvResult.OFFLINE_APPROVED;
-                        }
-
-                        @Override
-                        public EmvResult startTransaction() {
-                            return EmvResult.OFFLINE_APPROVED;
-                        }
-
-                        @Override
-                        public void cancelTransaction() {
-                        }
-
-                        @Override
-                        public EmvData getTransactionInfo() {
-                            return null;
-                        }
-
-                        @Nullable
-                        @Override
-                        public String getPan() {
-                            return null;
-                        }
-                    };
-                }
-            };
-        } else {
             Drawable logo = ContextCompat.getDrawable(this, R.drawable.ic_app_logo);
             Bitmap bm = drawableToBitmap(logo);
 
             POSDeviceImpl service = POSDeviceImpl.create(getApplicationContext());
             service.setCompanyLogo(bm);
             device = service;
-        }
+
 
         String clientId = "IKIA4733CE041F41ED78E52BD3B157F3AAE8E3FE153D";
         String clientSecret = "t1ll73stS3cr3t";
